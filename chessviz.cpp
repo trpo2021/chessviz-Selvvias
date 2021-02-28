@@ -3,66 +3,59 @@
 
 using namespace std;
 
+void init(char board[][8], bool status[][8]);
+void display_board(char board[][8], bool status[][8]);
+void move(char board[][8], bool status[][8], char *action);
+void remove (char *action, char board[][8]);
+
 struct Figure {
     char Kw = 'K', Kb = 'k', Qw = 'Q', Qb = 'q', Rw = 'R', Rb = 'r', Nw = 'N', Nb = 'n', Bw = 'B', Bb = 'b', Pw = 'P', Pb = 'p';
 };
 
-char board[8][8];
-bool status[8][8];
-int move_counter = 0;
-
-void display_board();
-void init_pos();
-void move();
-void remove();
+void init(char board[][8], bool status[][8]);
 
 int main () {
 
-    char lett;
-    int digit;
-    init_pos();
+    char board[8][8];
+    bool status[8][8];
+    char action[6];                                                                           //figure|e2|act|e4|
+    int move_counter = 0;
 
-    // while (cin >> lett >> digit)
-    // {
-    //     move(lett, digit);
-    // }    
+    init(board, status);
 
+    while (true)
+    {
+        cout << "\n";
+        if (move_counter % 2 == 0) {
+            cout << "Ход белых : ";
+        } else if (move_counter % 2 == 1) {
+            cout << "Ход чёрных : ";
+        }
+
+        cin >> action[0] >> action[1] >> action[2] >> action[3] >> action[4] >> action[5];
+
+        if ((action[2] < 49 || action[5] < 49) || (action[2] > 57 || action[5] > 57) || (action[1] < 97 || action[4] < 97) || (action[1] > 104 || action[4] > 104)) 
+        {                                                                                     // Проверка на пределы поля
+            cout << "ERROR!";
+            false;
+            break;
+        }
+        if (action[0] != board[(int)(56 - action[2])][(int)(8 - (104 - action[1]) - 1)])     //Проверка на фигуру
+        {
+            cout << "ERROR!";
+            false;
+            break; 
+        }
+        move(board, status, action);
+        move_counter += 1;
+    }
 
     return 0;
 }
 
-void move () {
+void init(char board[][8], bool status[][8]) {
 
-}
-
-void display_board () {
-
-    char letter = 'A';
-    cout << "\n";
-
-    for (int i = 0; i < 8; i++) {
-        cout << 8 - i;
-
-        for (int j = 0; j < 8; j++)
-        {
-            cout << "|" << board[i][j] << "|";
-        }
-
-        cout << endl;
-    }
-
-    cout << "  ";
-
-    for (int i = 0; i < 8; i++) {
-        cout << letter << "  ";
-        letter++;
-    }
-
-}
-
-void init_pos () {
-
-    Figure f;
+   Figure f;
 
     for (int i = 2; i < 7; i++) {
         for (int j = 0; j < 8; j++)
@@ -102,5 +95,58 @@ void init_pos () {
     board[7][4] = f.Kw;
     status[7][4] = 1;
 
-    display_board();
+    display_board(board, status);
+}
+
+void display_board(char board[][8], bool status[][8]) {
+    
+    char letter = 'A';
+    cout << "\n";
+
+    for (int i = 0; i < 8; i++) {
+        cout << 8 - i;
+
+        for (int j = 0; j < 8; j++)
+        {
+            cout << "|" << board[i][j] << "|";
+        }
+
+        cout << endl;
+    }
+
+    cout << "  ";
+
+    for (int i = 0; i < 8; i++) {
+        cout << letter << "  ";
+        letter++;
+    }
+
+}
+
+void move (char board[][8], bool status[][8], char *action) {
+
+    char temp;
+
+    cout << " ";
+
+    if (status[(int)(56 - action[2])][8 - (int)(104 - action[1] - 1)] == 1 ) {
+        temp = board[(int)(56 - action[2])][(int)(8 - (104 - action[1]) - 1)];          
+
+            remove(action, board);                                                          // УДАЛЕНИЕ ФИГУРЫ ИЗ ЯЧЕЙКИ
+
+        status[(int)(56 - action[2])][(int)(8 - (104 - action[1]) - 1)] = 0;
+
+        board[(int)(56 - action[5])][(int)(8 - (104 - action[4] + 1))] = temp;              // ЗАПИСЬ ФИГУРЫ В ЯЧЕЙКУ
+        status[(int)(56 - action[5])][(int)(8 - (104 - action[4] + 1))] = 1;
+
+    } 
+    display_board(board, status);
+
+
+}
+
+void remove (char *action, char board[][8]) {
+
+    board[(int)(56 - action[2])][(int)(8 - (104 - action[1]) - 1)] = '*';
+    
 }
