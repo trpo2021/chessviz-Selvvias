@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string>
+#include <fstream>
+#include <cstdlib>
 
 using namespace std;
 
@@ -16,39 +18,42 @@ void init(char board[][8], bool status[][8]);
 
 int main () {
 
+    setlocale(LC_ALL, "ru");
+
     char board[8][8];
     bool status[8][8];
-    char action[6];                                                                           //figure|e2|act|e4|
-    int move_counter = 0;
+    char action[6];                                                                          
+
+    ifstream input;
+    input.open("mv.txt");
 
     init(board, status);
 
-    while (true)
+    while (!input.eof())
     {
         cout << "\n";
-        if (move_counter % 2 == 0) {
-            cout << "Ход белых : ";
-        } else if (move_counter % 2 == 1) {
-            cout << "Ход чёрных : ";
-        }
 
-        cin >> action[0] >> action[1] >> action[2] >> action[3] >> action[4] >> action[5];
+        input >> action[0] >> action[1] >> action[2] >> action[3] >> action[4] >> action[5];
+        if (input.eof())                                                                       
+        break;
 
         if ((action[2] < 49 || action[5] < 49) || (action[2] > 57 || action[5] > 57) || (action[1] < 97 || action[4] < 97) || (action[1] > 104 || action[4] > 104)) 
-        {                                                                                     // Проверка на пределы поля
-            cout << "ERROR!";
+        {                                                                                     
+            cout << "ERROR!" << "\n";
             false;
             break;
         }
-        if (action[0] != board[(int)(56 - action[2])][(int)(8 - (104 - action[1]) - 1)])     //Проверка на фигуру
+        if (action[0] != board[(int)(56 - action[2])][(int)(8 - (104 - action[1]) - 1)])     
         {
-            cout << "ERROR!";
+            cout << "ERROR!" << "\n";
             false;
             break; 
         }
         move(board, status, action);
-        move_counter += 1;
     }
+
+    system("pause");
+	input.close();
 
     return 0;
 }
@@ -129,14 +134,14 @@ void move (char board[][8], bool status[][8], char *action) {
 
     cout << " ";
 
-    if (status[(int)(56 - action[2])][8 - (int)(104 - action[1] - 1)] == 1 ) {
+    if (status[(int)(56 - action[2])][8 - (int)(104 - action[1] + 1)] == 1 ) {
         temp = board[(int)(56 - action[2])][(int)(8 - (104 - action[1]) - 1)];          
 
-            remove(action, board);                                                          // УДАЛЕНИЕ ФИГУРЫ ИЗ ЯЧЕЙКИ
+            remove(action, board);                                                          
 
         status[(int)(56 - action[2])][(int)(8 - (104 - action[1]) - 1)] = 0;
 
-        board[(int)(56 - action[5])][(int)(8 - (104 - action[4] + 1))] = temp;              // ЗАПИСЬ ФИГУРЫ В ЯЧЕЙКУ
+        board[(int)(56 - action[5])][(int)(8 - (104 - action[4] + 1))] = temp;            
         status[(int)(56 - action[5])][(int)(8 - (104 - action[4] + 1))] = 1;
 
     } 
