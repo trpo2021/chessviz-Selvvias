@@ -2,3 +2,5 @@
 *.vscode
 #ignore .exe
 *.exe
+#ignore .txt
+*.txt

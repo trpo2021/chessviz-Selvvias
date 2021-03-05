@@ -5,6 +5,12 @@
 
 using namespace std;
 
+enum let_digit {
+
+    A = 97, H = 104, ONE = 49, EIGHT = 56
+
+};
+
 void init(char board[][8], bool status[][8]);
 void display_board(char board[][8], bool status[][8]);
 void move(char board[][8], bool status[][8], char *action);
@@ -37,13 +43,13 @@ int main () {
         if (input.eof())                                                                       
         break;
 
-        if ((action[2] < 49 || action[5] < 49) || (action[2] > 57 || action[5] > 57) || (action[1] < 97 || action[4] < 97) || (action[1] > 104 || action[4] > 104)) 
+        if ((action[2] < ONE || action[5] < ONE) || (action[2] > EIGHT || action[5] > EIGHT) || (action[1] < A || action[4] < A) || (action[1] > H || action[4] > H)) 
         {                                                                                     
             cout << "ERROR!" << "\n";
             false;
             break;
         }
-        if (action[0] != board[(int)(56 - action[2])][(int)(8 - (104 - action[1]) - 1)])     
+        if (action[0] != board[(int)(EIGHT - action[2])][(int)(8 - (H - action[1]) - 1)])     
         {
             cout << "ERROR!" << "\n";
             false;
@@ -134,15 +140,15 @@ void move (char board[][8], bool status[][8], char *action) {
 
     cout << " ";
 
-    if (status[(int)(56 - action[2])][8 - (int)(104 - action[1] + 1)] == 1 ) {
-        temp = board[(int)(56 - action[2])][(int)(8 - (104 - action[1]) - 1)];          
+    if (status[(int)(EIGHT - action[2])][8 - (int)(H - action[1] + 1)] == 1 ) {
+        temp = board[(int)(EIGHT - action[2])][(int)(8 - (H - action[1]) - 1)];          
 
             remove(action, board);                                                          
 
-        status[(int)(56 - action[2])][(int)(8 - (104 - action[1]) - 1)] = 0;
+        status[(int)(EIGHT - action[2])][(int)(8 - (H - action[1]) - 1)] = 0;
 
-        board[(int)(56 - action[5])][(int)(8 - (104 - action[4] + 1))] = temp;            
-        status[(int)(56 - action[5])][(int)(8 - (104 - action[4] + 1))] = 1;
+        board[(int)(EIGHT - action[5])][(int)(8 - (H - action[4] + 1))] = temp;            
+        status[(int)(EIGHT - action[5])][(int)(8 - (H - action[4] + 1))] = 1;
 
     } 
     display_board(board, status);
@@ -152,6 +158,6 @@ void move (char board[][8], bool status[][8], char *action) {
 
 void remove (char *action, char board[][8]) {
 
-    board[(int)(56 - action[2])][(int)(8 - (104 - action[1]) - 1)] = '*';
+    board[(int)(EIGHT - action[2])][(int)(8 - (H - action[1]) - 1)] = '*';
     
 }
