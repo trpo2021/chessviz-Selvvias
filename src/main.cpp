@@ -1,7 +1,5 @@
 #include "libraries.hpp"
 
-using namespace std;
-
 int main () {
 
     setlocale(LC_ALL, "ru");
@@ -36,7 +34,6 @@ int main () {
         move(board, status, action);
     }
 
-    system("pause");
 	input.close();
 
     return 0;
