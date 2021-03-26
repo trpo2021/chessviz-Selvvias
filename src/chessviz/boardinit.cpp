@@ -1,4 +1,5 @@
-#include "libraries.hpp"
+// #include "libraries.hpp"
+#include <chessvizlib/libraries.hpp>
 
 void init(char board[][8], bool status[][8]) {
 

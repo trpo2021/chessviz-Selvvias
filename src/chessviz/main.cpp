@@ -1,4 +1,5 @@
-#include "libraries.hpp"
+// #include "libraries.hpp"
+#include <chessvizlib/libraries.hpp>
 
 int main () {
 
