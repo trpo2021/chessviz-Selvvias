@@ -1,13 +1,13 @@
 // #include "libraries.hpp"
 #include <chessvizlib/libraries.hpp>
 
-void init(char board[][8], bool status[][8]) {
+void init(char board[][8], bool status[][8])
+{
 
-   Figure f;
+    Figure f;
 
     for (int i = 2; i < 7; i++) {
-        for (int j = 0; j < 8; j++)
-        {
+        for (int j = 0; j < 8; j++) {
             board[i][j] = '*';
             status[i][j] = 0;
         }
