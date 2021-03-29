@@ -21,7 +21,8 @@ BI_PATH = $(OBJ_D)/$(SRC_D)/$(NAMEDIR)/boardinit.o
 BP_PATH = $(OBJ_D)/$(SRC_D)/$(NAMEDIR)/boardprint.o
 MV_PATH = $(OBJ_D)/$(SRC_D)/$(NAMEDIR)/move.o
 
-TO_RM_OBJ = $(shell find $(OBJ_D)/$(SRC_D)/$(NAMEDIR) -name '*.d')
+TO_RM_OBJ_D = $(shell find $(OBJ_D)/$(SRC_D)/$(NAMEDIR) -name '*.d')
+TO_RM_OBJ_O = $(shell find $(OBJ_D)/$(SRC_D)/$(NAMEDIR) -name '*.o')
 TO_RM_BIN = $(shell find $(BIN_D) -name '*.d')
 
 $(APP_PATH) : $(MAIN_PATH) $(BI_PATH) $(BP_PATH) $(MV_PATH)
@@ -45,4 +46,4 @@ $(MV_PATH) : $(CPP_PATH)/move.cpp
 -include main.d boardinit.d boardprint.d move.d
 
 clean : 
-	rm -rf $(TO_RM_OBJ) $(TO_RM_BIN)
+	rm -rf $(TO_RM_OBJ_D) $(TO_RM_OBJ_O) $(TO_RM_BIN)
