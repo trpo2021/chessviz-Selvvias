@@ -1,21 +1,27 @@
 CXX = g++
 CXXFLAGS = -Wall -Werror -I src
+CXXFLAGS_2 = -Wall -Werror -I thirdparty
 CPPFLAGS = -MMD
 
 A_NAME = chessviz.exe
+T_NAME = chesstest.exe
 
 BIN_D = bin
 SRC_D = src
 OBJ_D = obj
+TST_D = test
 NAMEDIR = chessviz
 NAMEDIRLIB = chessvizlib
 
 APP_PATH = $(BIN_D)/$(A_NAME)
+TST_PATH = $(BIN_D)/$(T_NAME)
 
 CPP_PATH = $(SRC_D)/$(NAMEDIR)
 HPP_PATH = $(SRC_D)/$(NAMEDIRLIB)
 
 ML_PATH = $(OBJ_D)/$(SRC_D)/$(NAMEDIR)/mainlib.a
+TL_PATH = $(OBJ_D)/$(TST_D)/boardtestlib.a
+
 MAIN_PATH = $(OBJ_D)/$(SRC_D)/$(NAMEDIR)/main.o
 BI_PATH = $(OBJ_D)/$(SRC_D)/$(NAMEDIR)/boardinit.o
 BP_PATH = $(OBJ_D)/$(SRC_D)/$(NAMEDIR)/boardprint.o
@@ -38,8 +44,21 @@ $(MV_PATH) : $(CPP_PATH)/move.cpp
 
 -include main.d boardinit.d boardprint.d move.d
 
+.PHONY : test
+test : $(TST_PATH)
+$(TST_PATH) : $(TL_PATH)
+	$(CXX) $(CXXFLAGS) $^ -o $@
+
+$(TL_PATH) : $(TST_D)/board_test.o $(TST_D)/main.o $(BI_PATH) $(BP_PATH) $(MV_PATH)
+	ar r $@ $^
+
+$(TST_D)/%.o : %.cpp
+	$(CXX) $(CXXFLAGS_2) -c  $(CPPFLAGS) $@ -o $@
+
 .PHONY: clean
 clean:
 	$(RM) $(APP_PATH) $(ML_PATH)
 	find $(OBJ_D) -name '*.o' -exec $(RM) '{}' \;
 	find $(OBJ_D) -name '*.d' -exec $(RM) '{}' \;
+	find $(TST_D) -name '*.o' -exec $(RM) '{}' \;
+	find $(TST_D) -name '*.d' -exec $(RM) '{}' \;
