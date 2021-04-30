@@ -20,7 +20,6 @@ CPP_PATH = $(SRC_D)/$(NAMEDIR)
 HPP_PATH = $(SRC_D)/$(NAMEDIRLIB)
 
 ML_PATH = $(OBJ_D)/$(SRC_D)/$(NAMEDIRLIB)/mainlib.a
-TL_PATH = $(OBJ_D)/$(TST_D)/boardtestlib.a
 
 MAIN_PATH = $(OBJ_D)/$(SRC_D)/$(NAMEDIR)/main.o
 BI_PATH = $(OBJ_D)/$(SRC_D)/$(NAMEDIR)/boardinit.o
