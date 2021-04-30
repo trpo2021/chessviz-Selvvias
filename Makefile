@@ -19,7 +19,7 @@ TST_PATH = $(BIN_D)/$(T_NAME)
 CPP_PATH = $(SRC_D)/$(NAMEDIR)
 HPP_PATH = $(SRC_D)/$(NAMEDIRLIB)
 
-ML_PATH = $(OBJ_D)/$(SRC_D)/$(NAMEDIR)/mainlib.a
+ML_PATH = $(OBJ_D)/$(SRC_D)/$(NAMEDIRLIB)/mainlib.a
 TL_PATH = $(OBJ_D)/$(TST_D)/boardtestlib.a
 
 MAIN_PATH = $(OBJ_D)/$(SRC_D)/$(NAMEDIR)/main.o
@@ -27,8 +27,11 @@ BI_PATH = $(OBJ_D)/$(SRC_D)/$(NAMEDIR)/boardinit.o
 BP_PATH = $(OBJ_D)/$(SRC_D)/$(NAMEDIR)/boardprint.o
 MV_PATH = $(OBJ_D)/$(SRC_D)/$(NAMEDIR)/move.o
 
-$(APP_PATH) : $(MAIN_PATH) $(BI_PATH) $(BP_PATH) $(MV_PATH)
+$(APP_PATH) : $(ML_PATH)
 	$(CXX) $(CXXFLAGS) -o $@ $^
+
+$(ML_PATH) : $(MAIN_PATH) $(BI_PATH) $(BP_PATH) $(MV_PATH)
+	ar r $@ $^
 
 $(MAIN_PATH) : $(CPP_PATH)/main.cpp
 	$(CXX) -c $(CXXFLAGS) $(CPPFLAGS) $< -o $@
@@ -46,11 +49,8 @@ $(MV_PATH) : $(CPP_PATH)/move.cpp
 
 .PHONY : test
 test : $(TST_PATH)
-$(TST_PATH) : $(TL_PATH)
+$(TST_PATH) : $(TST_D)/board_test.o $(TST_D)/main.o $(ML_PATH)
 	$(CXX) $(CXXFLAGS) $^ -o $@
-
-$(TL_PATH) : $(TST_D)/board_test.o $(TST_D)/main.o $(BI_PATH) $(BP_PATH) $(MV_PATH)
-	ar r $@ $^
 
 $(TST_D)/%.o : %.cpp
 	$(CXX) $(CXXFLAGS_2) -c  $(CPPFLAGS) $@ -o $@
