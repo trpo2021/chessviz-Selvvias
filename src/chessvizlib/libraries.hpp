@@ -1,6 +1,7 @@
 #pragma once
 #include "boardinit.hpp"
 #include "boardprint.hpp"
+#include "checkout.hpp"
 #include "move.hpp"
 #include <cstdlib>
 #include <fstream>

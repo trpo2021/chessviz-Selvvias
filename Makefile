@@ -18,6 +18,7 @@ TST_PATH = $(BIN_D)/$(T_NAME)
 
 CPP_PATH = $(SRC_D)/$(NAMEDIR)
 HPP_PATH = $(SRC_D)/$(NAMEDIRLIB)
+OBJ_PATH = $(OBJ_D)/$(SRC_D)/$(NAMEDIR)
 
 ML_PATH = $(OBJ_D)/$(SRC_D)/$(NAMEDIRLIB)/mainlib.a
 
@@ -25,26 +26,18 @@ MAIN_PATH = $(OBJ_D)/$(SRC_D)/$(NAMEDIR)/main.o
 BI_PATH = $(OBJ_D)/$(SRC_D)/$(NAMEDIR)/boardinit.o
 BP_PATH = $(OBJ_D)/$(SRC_D)/$(NAMEDIR)/boardprint.o
 MV_PATH = $(OBJ_D)/$(SRC_D)/$(NAMEDIR)/move.o
+CH_PATH = $(OBJ_D)/$(SRC_D)/$(NAMEDIR)/checkout.o
 
 $(APP_PATH) : $(ML_PATH)
 	$(CXX) $(CXXFLAGS) -o $@ $^
 
-$(ML_PATH) : $(MAIN_PATH) $(BI_PATH) $(BP_PATH) $(MV_PATH)
+$(ML_PATH) : $(MAIN_PATH) $(BI_PATH) $(BP_PATH) $(MV_PATH) $(CH_PATH)
 	ar r $@ $^
 
-$(MAIN_PATH) : $(CPP_PATH)/main.cpp
-	$(CXX) -c $(CXXFLAGS) $(CPPFLAGS) $< -o $@
+$(OBJ_PATH)/%.o : $(CPP_PATH)/%.cpp
+	$(CXX) $(CXXFLAGS) -c  $(CPPFLAGS) $^ -o $@
 
-$(BI_PATH) : $(CPP_PATH)/boardinit.cpp
-	$(CXX) -c $(CXXFLAGS) $(CPPFLAGS) $< -o $@
-
-$(BP_PATH) : $(CPP_PATH)/boardprint.cpp
-	$(CXX) -c $(CXXFLAGS) $(CPPFLAGS) $< -o $@
-
-$(MV_PATH) : $(CPP_PATH)/move.cpp
-	$(CXX) -c $(CXXFLAGS) $(CPPFLAGS) $< -o $@
-
--include main.d boardinit.d boardprint.d move.d
+-include main.d boardinit.d boardprint.d move.d checkout.d
 
 .PHONY : test
 test : $(TST_PATH)
