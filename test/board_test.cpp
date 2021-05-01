@@ -237,7 +237,7 @@ CTEST(board_arr, move_board_black_rook_left_and_right)
     ASSERT_EQUAL(after_move_from_2, 0);
     ASSERT_EQUAL(after_move_to_2, 1);
 }
-//TEST #11
+// TEST #11
 CTEST(board_arr, move_board_black_knight_left_and_right)
 {
     CTEST_LOG("Black_Knight_LEFT&RIGHT_CHECK");
@@ -345,8 +345,9 @@ CTEST(board_arr, move_board_black_king)
     ASSERT_EQUAL(after_move_from, 0);
     ASSERT_EQUAL(after_move_to, 1);
 }
-//TEST #15
-CTEST(board_arr, board_init) {
+// TEST #15
+CTEST(board_arr, board_init)
+{
     char test_arr[8][8];
     bool stat_arr[8][8];
 
@@ -359,16 +360,13 @@ CTEST(board_arr, board_init) {
             if (i > 1 && i < 6) {
                 const char comp = '*';
                 ASSERT_EQUAL(test_arr[i][j], comp);
-            }
-            else if (i == 1) {
+            } else if (i == 1) {
                 const char comp_1 = 'p';
                 ASSERT_EQUAL(test_arr[i][j], comp_1);
-            }
-            else if (i == 6) {
+            } else if (i == 6) {
                 const char comp_2 = 'P';
                 ASSERT_EQUAL(test_arr[i][j], comp_2);
-            }
-            else if (i == 0) {
+            } else if (i == 0) {
                 if (j == 0 || j == 7)
                     ASSERT_EQUAL(test_arr[i][j], 'r');
                 else if (j == 1 || j == 6)
@@ -379,8 +377,7 @@ CTEST(board_arr, board_init) {
                     ASSERT_EQUAL(test_arr[i][j], 'q');
                 else if (j == 4)
                     ASSERT_EQUAL(test_arr[i][j], 'k');
-            }
-            else if (i == 7) {
+            } else if (i == 7) {
                 if (j == 0 || j == 7)
                     ASSERT_EQUAL(test_arr[i][j], 'R');
                 else if (j == 1 || j == 6)
@@ -394,11 +391,10 @@ CTEST(board_arr, board_init) {
             }
         }
     }
-
-
 }
-//TEST #16
-CTEST(status_arr, check_init) {
+// TEST #16
+CTEST(status_arr, check_init)
+{
     char test_arr[8][8];
     bool stat_arr[8][8];
 
@@ -415,8 +411,9 @@ CTEST(status_arr, check_init) {
         }
     }
 }
-//TEST #17
-CTEST(check_input, wrong_pos_figure) {
+// TEST #17
+CTEST(check_input, wrong_pos_figure)
+{
     CTEST_LOG("WRONG_INPUT_FIGURE_CHECK");
 
     char act[7] = "Ea1-a3";
@@ -428,8 +425,9 @@ CTEST(check_input, wrong_pos_figure) {
     const int rez = input_checkout(test_arr, act);
     ASSERT_EQUAL(rez, -1);
 }
-//TEST #18
-CTEST(check_input, wrong_pos_cell_from) {
+// TEST #18
+CTEST(check_input, wrong_pos_cell_from)
+{
     CTEST_LOG("WRONG_POSITION_CELL(LETTER)_FROM_CHECK");
 
     char act[7] = "Ry1-a3";
@@ -441,8 +439,9 @@ CTEST(check_input, wrong_pos_cell_from) {
     const int rez = input_checkout(test_arr, act);
     ASSERT_EQUAL(rez, -1);
 }
-//TEST #19
-CTEST(check_input, wrong_pos_cell_to) {
+// TEST #19
+CTEST(check_input, wrong_pos_cell_to)
+{
     CTEST_LOG("WRONG_POSITION_CELL(LETTER)_TO_CHECK");
 
     char act[7] = "Ra1-z3";
@@ -454,8 +453,9 @@ CTEST(check_input, wrong_pos_cell_to) {
     const int rez = input_checkout(test_arr, act);
     ASSERT_EQUAL(rez, -1);
 }
-//TEST #20
-CTEST(check_input, wrong_pos_digit_from) {
+// TEST #20
+CTEST(check_input, wrong_pos_digit_from)
+{
     CTEST_LOG("WRONG_POSITION_DIGIT_FROM_CHECK");
 
     char act[7] = "Ra9-a3";
@@ -467,8 +467,9 @@ CTEST(check_input, wrong_pos_digit_from) {
     const int rez = input_checkout(test_arr, act);
     ASSERT_EQUAL(rez, -1);
 }
-//TEST #21
-CTEST(check_input, wrong_pos_digit_to) {
+// TEST #21
+CTEST(check_input, wrong_pos_digit_to)
+{
     CTEST_LOG("WRONG_POSITION_DIGIT_TO_CHECK");
 
     char act[7] = "Ra1-a9";
@@ -480,8 +481,9 @@ CTEST(check_input, wrong_pos_digit_to) {
     const int rez = input_checkout(test_arr, act);
     ASSERT_EQUAL(rez, -1);
 }
-//TEST #22
-CTEST(check_input, excess_input_data) {
+// TEST #22
+CTEST(check_input, excess_input_data)
+{
     CTEST_LOG("EXCESS_INPUT_DATA_CHECK");
 
     char act[11] = "Ry35423-a3";
@@ -493,9 +495,10 @@ CTEST(check_input, excess_input_data) {
     const int rez = input_checkout(test_arr, act);
     ASSERT_EQUAL(rez, -1);
 }
-//TEST#23
-CTEST(check_input, not_enough_input_data) {
-CTEST_LOG("NOT_ENOUGH_INPUT_DATA_CHECK");
+// TEST#23
+CTEST(check_input, not_enough_input_data)
+{
+    CTEST_LOG("NOT_ENOUGH_INPUT_DATA_CHECK");
 
     char act[7] = "Ry1-a";
     char test_arr[8][8];
@@ -506,8 +509,9 @@ CTEST_LOG("NOT_ENOUGH_INPUT_DATA_CHECK");
     const int rez = input_checkout(test_arr, act);
     ASSERT_EQUAL(rez, -1);
 }
-//TEST#24
-CTEST(check_input, completely_incorrect_input_data) {
+// TEST#24
+CTEST(check_input, completely_incorrect_input_data)
+{
     CTEST_LOG("COMPLETELY_INCORRECT_INPUT_DATA_CHECK");
 
     char act[7] = "Ryegtk";
