@@ -16,7 +16,7 @@ void move(char board[][8], bool status[][8], char* action)
         board[(int)(EIGHT - action[5])][(int)(8 - (H - action[4] + 1))] = temp;
         status[(int)(EIGHT - action[5])][(int)(8 - (H - action[4] + 1))] = 1;
     }
-    display_board(board, status);
+    // display_board(board, status);
 }
 
 void remove(char* action, char board[][8])

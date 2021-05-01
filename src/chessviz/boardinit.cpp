@@ -41,5 +41,5 @@ void init(char board[][8], bool status[][8])
     board[7][4] = f.Kw;
     status[7][4] = 1;
 
-    display_board(board, status);
+    // display_board(board, status);
 }

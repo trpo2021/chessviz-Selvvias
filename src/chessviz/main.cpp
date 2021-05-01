@@ -13,6 +13,11 @@ int main()
 
     init(board, status);
 
+    if (!input) {
+        cout << "\nFILE CAN'T BE READED\n";
+        exit(-1);
+    }
+
     while (!input.eof()) {
         cout << "\n";
 
@@ -21,22 +26,10 @@ int main()
         if (input.eof())
             break;
 
-        if ((action[2] < ONE || action[5] < ONE)
-            || (action[2] > EIGHT || action[5] > EIGHT)
-            || (action[1] < A || action[4] < A)
-            || (action[1] > H || action[4] > H)) {
-            cout << "ERROR!"
-                 << "\n";
-            break;
-        }
-        if (action[0]
-            != board[(int)(EIGHT - action[2])]
-                    [(int)(8 - (H - action[1]) - 1)]) {
-            cout << "ERROR!"
-                 << "\n";
-            break;
-        }
-        move(board, status, action);
+        int check = input_checkout(board, action);
+
+        if (check == 0)
+            move(board, status, action);
     }
 
     input.close();
