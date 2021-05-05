@@ -19,6 +19,7 @@ TST_PATH = $(BIN_D)/$(T_NAME)
 CPP_PATH = $(SRC_D)/$(NAMEDIR)
 HPP_PATH = $(SRC_D)/$(NAMEDIRLIB)
 OBJ_PATH = $(OBJ_D)/$(SRC_D)/$(NAMEDIR)
+OBJT_PATH = $(OBJ_D)/$(TST_D)
 
 ML_PATH = $(OBJ_D)/$(SRC_D)/$(NAMEDIRLIB)/mainlib.a
 
@@ -41,15 +42,15 @@ $(OBJ_PATH)/%.o : $(CPP_PATH)/%.cpp
 
 .PHONY : test
 test : $(TST_PATH)
-$(TST_PATH) : $(TST_D)/board_test.o $(TST_D)/main.o $(ML_PATH)
+$(TST_PATH) : $(OBJT_PATH)/board_test.o $(OBJT_PATH)/main.o $(ML_PATH)
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
-$(TST_D)/%.o : %.cpp
-	$(CXX) $(CXXFLAGS_2) -c  $(CPPFLAGS) $@ -o $@
+$(OBJT_PATH)/%.o : $(TST_D)/%.cpp
+	$(CXX) $(CXXFLAGS_2) -c  $(CPPFLAGS) $^ -o $@
 
 .PHONY: clean
 clean:
-	$(RM) $(APP_PATH) $(ML_PATH)
+	$(RM) $(APP_PATH) $(TST_PATH) $(ML_PATH)
 	find $(OBJ_D) -name '*.o' -exec $(RM) '{}' \;
 	find $(OBJ_D) -name '*.d' -exec $(RM) '{}' \;
 	find $(TST_D) -name '*.o' -exec $(RM) '{}' \;
